@@ -37,8 +37,14 @@ let eliminateButtons = document.querySelectorAll("[id^='btn-eliminate-']");
 
 let startButton = document.querySelector('#btn-start-game');
 startButton.onclick = function(){
+    sceneNo = 1;
+    turnNo.innerHTML = 'Rodada ' + sceneNo;
     for(let i = 0; i < playerNo; i++){
-        playerNames[i].innerHTML = playerNamesFromInput[i].value;
+        if (playerNamesFromInput[i].value == ''){
+            playerNames[i].innerHTML = '-';
+        }else{
+            playerNames[i].innerHTML = playerNamesFromInput[i].value;
+        } 
     }
 }
 
@@ -132,3 +138,4 @@ events.
 */ 
 
 let playerNo = 0; // will be updated when the shuffle button is activated.
+let sceneNo = 0; // current turn (must be updated to turnNo label).
