@@ -35,6 +35,20 @@ List of buttons and onclick functions
 
 let eliminateButtons = document.querySelectorAll("[id^='btn-eliminate-']");
 
+for(let i = 0; i < eliminateButtons.length; i++){
+    eliminateButtons[i].onclick = function(){
+        console.log(i);
+        console.log(charactersList[i]);
+        if (this.innerHTML == 'ELIMINAR'){
+            playerFigures[i + 1].src = charactersList[i].picture;
+            this.innerHTML = 'RESTAURAR';
+        }else{
+            playerFigures[i + 1].src = 'img/question-mark.png';
+            this.innerHTML = 'ELIMINAR';
+        }
+    }
+}
+
 let startButton = document.querySelector('#btn-start-game');
 startButton.onclick = function(){
     sceneNo = 1;
@@ -46,14 +60,13 @@ startButton.onclick = function(){
             playerNames[i].innerHTML = playerNamesFromInput[i].value;
         } 
     }
-}
+    console.log(charactersList);
+};
 
 let nextSceneButton = document.querySelector('#btn-next-scene');
 
 let shuffleCharactersButton = document.querySelector('#btn-shuffle-characters');
 shuffleCharactersButton.onclick = function(){
-    let roles = ['aldeão', 'bruxa', 'caçador', 'cupido', 'vidente', 'raposa', 'lobisomem',
-                'lobisomem branco'];
     
     // if the player chooses more than 10 characters, default values will be used
     let defaultCharacters = [2, 1, 1, 1, 1, 1, 2, 1];
@@ -95,17 +108,19 @@ shuffleCharactersButton.onclick = function(){
                 shuffledNumber++;   
             }
             roleNames[shuffledNumber].innerHTML = roles[i];
+            charactersList[shuffledNumber].role = roles[i];
+            charactersList[shuffledNumber].picture = pictures[i];
             charsTaken++;
         } 
     }   
-}
+};
 
 let clearPlayersButton = document.querySelector('#btn-clear-players');
 clearPlayersButton.onclick = function(){
     for(let i = 0; i < playerNamesFromInput.length; i++){
        playerNamesFromInput[i].value = '';
     }
-}
+};
 
 let hideButton = document.querySelector('#btn-toggle-characters');
 hideButton.onclick = function(){
@@ -154,3 +169,49 @@ events.
 
 let playerNo = 0; // will be updated when the shuffle button is activated.
 let sceneNo = 0; // current turn (must be updated to turnNo label).
+
+// roles & pictures: will be used to create data structures for the chosen players.
+// roles contain the role names, pictures contain path to their PNG files.
+let roles = ['aldeão', 'bruxa', 'caçador', 'cupido', 'vidente', 'raposa', 'lobisomem',
+'lobisomem branco'];
+
+let pictures = ['img/villager.PNG', 'img/witch.PNG', 'img/hunter.PNG', 'img/cupid.PNG',
+'img/seer.PNG', 'img/fox.PNG', 'img/werewolf.PNG', 'img/white-werewolf.PNG'];
+
+let charactersList = [];
+class character {
+    constructor(player, role, picture){
+        this._player = player;
+        this._role = role;
+        this._picture = picture;
+    }
+
+    get player(){
+        return this._player;
+    }
+
+    set player(newPlayer){
+        this._player = newPlayer;
+    }
+
+    get role(){
+        return this._role;
+    }
+
+    set role(newRole){
+        this._role = newRole;
+    }
+
+    get picture(){
+        return this._picture;
+    }
+
+    set picture(newPicture){
+        this._picture = newPicture;
+    }
+}
+
+//initialize empty list of characters
+for (let i = 0; i < 10; i++){
+    charactersList.push(new character('Player ' + i, 'role', 'picture'));
+}
