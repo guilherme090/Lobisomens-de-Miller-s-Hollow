@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Lobisomens de Miller's Hollow</title>
+        <link rel="stylesheet" href="css/style.css">
+        <body>
+            Lobisomens de Miller's Hollow <br><br>
+
+            <!-- Placeholder for picture showing current game scene -->
+            
+            <div id="screen">
+                <img class="picture" id="display" src="img/cover.PNG" alt="Capa" width="250" height="300">
+            </div>
+            
+            <!-- Each player's token -->
+            <div id="board">
+                <div id="board-row1">
+                    <div class="token" id="p01">
+                        <img class="picture" id="display01" src="img/question-mark.png" alt="Jogador 1" width="70" height="100">
+                        <label id="name01">Nome</label>
+                    </div>
+                    <div class="token" id="p02">
+                        <img class="picture" id="display02" src="img/question-mark.png" alt="Jogador 2" width="70" height="100">
+                        <label id="name02">Nome</label>
+                    </div>
+                    <div class="token" id="p03">
+                        <img class="picture" id="display03" src="img/question-mark.png" alt="Jogador 3" width="70" height="100">
+                        <label id="name03">Nome</label>
+                    </div>
+                    <div class="token" id="p04">
+                        <img class="picture" id="display04" src="img/question-mark.png"" alt="Jogador 4" width="70" height="100">
+                        <label id="name04">Nome</label>
+                    </div>
+                </div>
+                <div id="board-row2">
+                    <div class="token" id="p05">
+                        <img class="picture" id="display05" src="img/question-mark.png"" alt="Jogador 5" width="70" height="100">
+                        <label id="name05">Nome</label>
+                    </div>
+                    <div class="token" id="p06">
+                        <img class="picture" id="display06" src="img/question-mark.png"" alt="Jogador 6" width="70" height="100">
+                        <label id="name06">Nome</label>
+                    </div>
+                </div>
+                <div id="board-row3">
+                    <div class="token" id="p07">
+                        <img class="picture" id="display07" src="img/question-mark.png"" alt="Jogador 7" width="70" height="100">
+                        <label id="name07">Nome</label>
+                    </div>
+                    <div class="token" id="p08">
+                        <img class="picture" id="display08" src="img/question-mark.png"" alt="Jogador 8" width="70" height="100">
+                        <label id="name08">Nome</label>
+                    </div>
+                    <div class="token" id="p09">
+                        <img class="picture" id="display09" src="img/question-mark.png"" alt="Jogador 9" width="70" height="100">
+                        <label id="name09">Nome</label>
+                    </div>
+                    <div class="token" id="p10">
+                        <img class="picture" id="display10" src="img/question-mark.png"" alt="Jogador 10" width="70" height="100">
+                        <label id="name10">Nome</label>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label id="game-text">Escolha os personagens do jogo.</label>
+            </div>
+            
+            <br>
+
+            <button class="btn" id="btn-start-game">COMEÇAR JOGO</button>
+            <button class="btn" id="btn-next-scene">PRÓXIMA CENA</button>
+            <label id="turn-number">Rodada 0</label>
+
+            <br><br>
+
+            <!-- Character selector (to be used before starting the game) -->
+            <div id="character-selector">
+                <label>Aldeões simples </label><input type="number" id="villager-no" min="0" max="10" value="3"></input>
+                <label>Bruxas </label><input type="number" id="witch-no" min="0" max="10" value="1"></input>
+                <label>Caçadores </label><input type="number" id="hunter-no" min="0" max="10" value="0"></input>
+                <!-- <label>Ladrões </label><input type="number" id="thief-no" min="0" max="10" value="0"></input> -->
+                <!-- <label>Atores </label><input type="number" id="actor-no" min="0" max="10" value="1"></input> -->
+                <label>Cupidos </label><input type="number" id="cupid-no" min="0" max="10" value="1"></input>
+                <label>Videntes </label><input type="number" id="seer-no" min="0" max="10" value="1"></input>
+                <label>Raposas </label><input type="number" id="fox-no" min="0" max="10" value="0"></input>
+                <br>
+                <label>Lobisomens </label><input type="number" id="werewolf-no" min="0" max="10" value="1"></input>
+                <label>Lobisomens Brancos </label><input type="number" id="white-werewolf-no" min="0" max="10" value="0"></input>
+            </div>
+
+            <br>
+
+            <!-- Player register (will be able to have its visibility changed) -->
+            <div id="player-register">
+                <input type="text" id="player01" placeholder="Jogador 1"></input> <label id="role01">(papel)</label> <button class="btn" id="btn-eliminate-p01">ELIMINAR</button><br>
+                <input type="text" id="player02" placeholder="Jogador 2"></input> <label id="role02">(papel)</label> <button class="btn" id="btn-eliminate-p02">ELIMINAR</button><br>
+                <input type="text" id="player03" placeholder="Jogador 3"></input> <label id="role03">(papel)</label> <button class="btn" id="btn-eliminate-p03">ELIMINAR</button><br>
+                <input type="text" id="player04" placeholder="Jogador 4"></input> <label id="role04">(papel)</label> <button class="btn" id="btn-eliminate-p04">ELIMINAR</button><br>
+                <input type="text" id="player05" placeholder="Jogador 5"></input> <label id="role05">(papel)</label> <button class="btn" id="btn-eliminate-p05">ELIMINAR</button><br>
+                <input type="text" id="player06" placeholder="Jogador 6"></input> <label id="role06">(papel)</label> <button class="btn" id="btn-eliminate-p06">ELIMINAR</button><br>
+                <input type="text" id="player07" placeholder="Jogador 7"></input> <label id="role07">(papel)</label> <button class="btn" id="btn-eliminate-p07">ELIMINAR</button><br>
+                <input type="text" id="player08" placeholder="Jogador 8"></input> <label id="role08">(papel)</label> <button class="btn" id="btn-eliminate-p08">ELIMINAR</button><br>
+                <input type="text" id="player09" placeholder="Jogador 9"></input> <label id="role09">(papel)</label> <button class="btn" id="btn-eliminate-p09">ELIMINAR</button><br>
+                <input type="text" id="player10" placeholder="Jogador 10"></input> <label id="role10">(papel)</label> <button class="btn" id="btn-eliminate-p10">ELIMINAR</button>
+            </div>
+
+            <br>
+
+            <button class="btn" id="btn-shuffle-characters">SORTEAR PERSONAGENS</button>
+            <button class="btn" id="btn-clear-players">LIMPAR LISTA DE JOGADORES</button>
+            <button class="btn" id="btn-toggle-characters">MOSTRAR/OCULTAR PERSONAGENS</button>
+
+            <!-- Controlling index.html itself -->
+            <script src="js/file.js"></script> 
+            
+        </body>
+    </head>
+</html>
