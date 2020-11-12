@@ -5,13 +5,14 @@ Addressable tags
 Query selectors which point to HTML elements related to CHARACTERS.
 */ 
 
-// game-text: board to write informative messages for the players, like instructions.
+// playerNames: Names of the players on the gameboard.
+// gameText: board to write informative messages for the players, like instructions.
 let playerNames = Array.from(document.querySelectorAll("[id^='name']"));
 let gameText = document.querySelector('#game-text');
 // console.log(playerNames); 
 
-// position 0 is for the whole group of labels. 1-10 are individual labels.
-let playerNamesFromInput = Array.from(document.querySelectorAll("[id^='player']"));
+// playerNamesFromInput: names of the players typed by the user (input boxes)
+let playerNamesFromInput = Array.from(document.querySelectorAll("[id^='input-player']"));
 // console.log(playerNamesFromInput);
 
 // character names to be shuffled.
@@ -35,6 +36,11 @@ List of buttons and onclick functions
 let eliminateButtons = document.querySelectorAll("[id^='btn-eliminate-']");
 
 let startButton = document.querySelector('#btn-start-game');
+startButton.onclick = function(){
+    for(let i = 0; i < playerNo; i++){
+        playerNames[i].innerHTML = playerNamesFromInput[i].value;
+    }
+}
 
 let nextSceneButton = document.querySelector('#btn-next-scene');
 
