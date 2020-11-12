@@ -1,0 +1,123 @@
+* {
+    box-sizing: border-box;
+  }
+
+body{
+    background-color: wheat;
+}
+
+/* The players' board */
+#screen{
+    width: 40%;
+    float: left;
+    background-color: burlywood;
+    height: 428px;
+}
+
+#display{
+    display: block;
+    margin-top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#board{
+    width: 60%;
+    float: left;
+    height: 440px;
+}
+
+#board-row1, #board-row2, #board-row3{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    background-color: brown;
+}
+
+[id^="name"]{
+    display: block;
+    position: relative;
+    margin-top: auto;
+    margin-bottom: 0px;
+    /* transform: translateY(-100%); */
+    text-align: center;
+    color: white;
+}
+
+/* There is an empty space between players 5 and 6, so number 5's margin-right is adjusted */
+
+#name05{
+    margin-right: 180px;
+}
+
+#display05{
+    margin-right: 180px;
+}
+
+#board-row1 > div, #board-row2 > div, #board-row3 > div{
+    margin: 10px;
+}
+
+#game-text{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border-style: solid;
+    text-align: center;
+    background-color: snow;
+}
+
+/* The buttons */
+
+.btn{
+    background-color: saddlebrown;
+    color: snow;
+}
+
+/* Character buttons */
+
+#villager-no{
+    color:white;
+    background-color: brown;
+}
+
+#witch-no{
+    color:white;
+    background-color: purple;
+}
+
+#hunter-no{
+    color:white;
+    background-color: olivedrab;
+}
+
+#cupid-no{
+    color:white;
+    background-color: magenta;
+}
+
+#seer-no{
+    color:white;
+    background-color: gray;
+}
+
+#fox-no{
+    color:white;
+    background-color: orangered;
+}
+
+#werewolf-no{
+    color:white;
+    background-color: black;
+}
+
+#white-werewolf-no{
+    color:black;
+    background-color: white;
+}
+
+/* #name06{
+    text-decoration: line-through;
+    text-decoration-color: white;
+} */
