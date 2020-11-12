@@ -131,6 +131,21 @@ let playerFigures = document.querySelectorAll("[id^='display']");
 
 /*
 ----------------------------------------------------------------------------------
+Audio
+----------------------------------------------------------------------------------
+Game music and sounds
+*/ 
+
+let aCucaTePega = document.getElementById('a-cuca-te-pega');
+let estupidoCupido = document.getElementById('estupido-cupido');
+let euNasciHa10MilAnosAtras = document.getElementById('eu-nasci-ha-dez-mil-anos-atras');
+let jirafalesFlorinda = document.getElementById('jirafales-florinda');
+let mascara = document.getElementById('mascara');
+let misteriosDaMeiaNoite = document.getElementById('misterios-da-meia-noite');
+let vamos = document.getElementById('vamos');
+
+/*
+----------------------------------------------------------------------------------
 Game variables and data structures
 ----------------------------------------------------------------------------------
 Useful game information stored in variables and data structure for controlling 
