@@ -8,7 +8,7 @@ body{
 
 /* The players' board */
 #screen{
-    width: 40%;
+    width: 50%;
     float: left;
     background-color: burlywood;
     height: 428px;
@@ -22,9 +22,14 @@ body{
 }
 
 #board{
-    width: 60%;
+    width: 50%;
     float: left;
-    height: 440px;
+    height: 430px;
+    background-image: url("../img/cover.PNG");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: brown;
 }
 
 #board-row1, #board-row2, #board-row3{
@@ -32,7 +37,7 @@ body{
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
-    background-color: brown;
+    /* background-color: brown; */
 }
 
 [id^="name"]{
