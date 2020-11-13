@@ -32,6 +32,10 @@ body{
     background-color: brown;
 }
 
+[type="inside-the-screen"]{
+    margin: 4px;
+}
+
 #board-row1, #board-row2, #board-row3{
     display: flex;
     flex-direction: row;

@@ -10,7 +10,44 @@
             <!-- Placeholder for picture showing current game scene -->
             
             <div id="screen">
-                <img class="picture" id="display" src="img/cover.PNG" alt="Capa" width="250" height="300">
+                <!-- Character selector (to be used before starting the game) -->
+                <div type="inside-the-screen" id="character-selector">
+                    <nobr><label>Aldeões simples </label><input type="number" id="villager-no" min="0" max="10" value="3"></input></nobr>
+                    <nobr><label>Bruxas </label><input type="number" id="witch-no" min="0" max="10" value="1"></input></nobr>
+                    <nobr><label>Caçadores </label><input type="number" id="hunter-no" min="0" max="10" value="0"></input></nobr>
+                    <!-- <nobr><label>Ladrões </label><input type="number" id="thief-no" min="0" max="10" value="0"></input></nobr> -->
+                    <!-- <nobr><label>Atores </label><input type="number" id="actor-no" min="0" max="10" value="1"></input></nobr> -->
+                    <nobr></nobr><label>Cupidos </label><input type="number" id="cupid-no" min="0" max="10" value="1"></input></nobr>
+                    <nobr><label>Videntes </label><input type="number" id="seer-no" min="0" max="10" value="1"></input></nobr>
+                    <nobr><label>Raposas </label><input type="number" id="fox-no" min="0" max="10" value="0"></input></nobr>
+                    <br><br>
+                    <nobr><label>Lobisomens </label><input type="number" id="werewolf-no" min="0" max="10" value="1"></input></nobr>
+                    <nobr><label>Lobisomens Brancos </label><input type="number" id="white-werewolf-no" min="0" max="10" value="0"></input></nobr>
+                </div>
+
+                <br>
+
+                <!-- Player register (will be able to have its visibility changed) -->
+                <div type="inside-the-screen" id="player-register">
+                    <input type="text" id="input-player01" placeholder="Jogador 1"></input> <label id="role01">(papel)</label> <button class="btn" id="btn-eliminate-p01">ELIMINAR</button><br>
+                    <input type="text" id="input-player02" placeholder="Jogador 2"></input> <label id="role02">(papel)</label> <button class="btn" id="btn-eliminate-p02">ELIMINAR</button><br>
+                    <input type="text" id="input-player03" placeholder="Jogador 3"></input> <label id="role03">(papel)</label> <button class="btn" id="btn-eliminate-p03">ELIMINAR</button><br>
+                    <input type="text" id="input-player04" placeholder="Jogador 4"></input> <label id="role04">(papel)</label> <button class="btn" id="btn-eliminate-p04">ELIMINAR</button><br>
+                    <input type="text" id="input-player05" placeholder="Jogador 5"></input> <label id="role05">(papel)</label> <button class="btn" id="btn-eliminate-p05">ELIMINAR</button><br>
+                    <input type="text" id="input-player06" placeholder="Jogador 6"></input> <label id="role06">(papel)</label> <button class="btn" id="btn-eliminate-p06">ELIMINAR</button><br>
+                    <input type="text" id="input-player07" placeholder="Jogador 7"></input> <label id="role07">(papel)</label> <button class="btn" id="btn-eliminate-p07">ELIMINAR</button><br>
+                    <input type="text" id="input-player08" placeholder="Jogador 8"></input> <label id="role08">(papel)</label> <button class="btn" id="btn-eliminate-p08">ELIMINAR</button><br>
+                    <input type="text" id="input-player09" placeholder="Jogador 9"></input> <label id="role09">(papel)</label> <button class="btn" id="btn-eliminate-p09">ELIMINAR</button><br>
+                    <input type="text" id="input-player10" placeholder="Jogador 10"></input> <label id="role10">(papel)</label> <button class="btn" id="btn-eliminate-p10">ELIMINAR</button>
+                </div>
+
+                <br>
+
+                <!-- Buttons to start game and control scenes -->
+
+                <button class="btn" type="inside-the-screen" id="btn-start-game">COMEÇAR JOGO</button>
+                <button class="btn" type="inside-the-screen" id="btn-next-scene">PRÓXIMA CENA</button>
+                <label type="inside-the-screen" id="turn-number">Rodada 0</label>
             </div>
             
             <!-- Each player's token -->
@@ -67,45 +104,6 @@
                 <label id="game-text">Escolha os personagens do jogo.</label>
             </div>
             
-            <br>
-
-            <button class="btn" id="btn-start-game">COMEÇAR JOGO</button>
-            <button class="btn" id="btn-next-scene">PRÓXIMA CENA</button>
-            <label id="turn-number">Rodada 0</label>
-
-            <br><br>
-
-            <!-- Character selector (to be used before starting the game) -->
-            <div id="character-selector">
-                <label>Aldeões simples </label><input type="number" id="villager-no" min="0" max="10" value="3"></input>
-                <label>Bruxas </label><input type="number" id="witch-no" min="0" max="10" value="1"></input>
-                <label>Caçadores </label><input type="number" id="hunter-no" min="0" max="10" value="0"></input>
-                <!-- <label>Ladrões </label><input type="number" id="thief-no" min="0" max="10" value="0"></input> -->
-                <!-- <label>Atores </label><input type="number" id="actor-no" min="0" max="10" value="1"></input> -->
-                <label>Cupidos </label><input type="number" id="cupid-no" min="0" max="10" value="1"></input>
-                <label>Videntes </label><input type="number" id="seer-no" min="0" max="10" value="1"></input>
-                <label>Raposas </label><input type="number" id="fox-no" min="0" max="10" value="0"></input>
-                <br>
-                <label>Lobisomens </label><input type="number" id="werewolf-no" min="0" max="10" value="1"></input>
-                <label>Lobisomens Brancos </label><input type="number" id="white-werewolf-no" min="0" max="10" value="0"></input>
-            </div>
-
-            <br>
-
-            <!-- Player register (will be able to have its visibility changed) -->
-            <div id="player-register">
-                <input type="text" id="input-player01" placeholder="Jogador 1"></input> <label id="role01">(papel)</label> <button class="btn" id="btn-eliminate-p01">ELIMINAR</button><br>
-                <input type="text" id="input-player02" placeholder="Jogador 2"></input> <label id="role02">(papel)</label> <button class="btn" id="btn-eliminate-p02">ELIMINAR</button><br>
-                <input type="text" id="input-player03" placeholder="Jogador 3"></input> <label id="role03">(papel)</label> <button class="btn" id="btn-eliminate-p03">ELIMINAR</button><br>
-                <input type="text" id="input-player04" placeholder="Jogador 4"></input> <label id="role04">(papel)</label> <button class="btn" id="btn-eliminate-p04">ELIMINAR</button><br>
-                <input type="text" id="input-player05" placeholder="Jogador 5"></input> <label id="role05">(papel)</label> <button class="btn" id="btn-eliminate-p05">ELIMINAR</button><br>
-                <input type="text" id="input-player06" placeholder="Jogador 6"></input> <label id="role06">(papel)</label> <button class="btn" id="btn-eliminate-p06">ELIMINAR</button><br>
-                <input type="text" id="input-player07" placeholder="Jogador 7"></input> <label id="role07">(papel)</label> <button class="btn" id="btn-eliminate-p07">ELIMINAR</button><br>
-                <input type="text" id="input-player08" placeholder="Jogador 8"></input> <label id="role08">(papel)</label> <button class="btn" id="btn-eliminate-p08">ELIMINAR</button><br>
-                <input type="text" id="input-player09" placeholder="Jogador 9"></input> <label id="role09">(papel)</label> <button class="btn" id="btn-eliminate-p09">ELIMINAR</button><br>
-                <input type="text" id="input-player10" placeholder="Jogador 10"></input> <label id="role10">(papel)</label> <button class="btn" id="btn-eliminate-p10">ELIMINAR</button>
-            </div>
-
             <br>
 
             <button class="btn" id="btn-shuffle-characters">SORTEAR PERSONAGENS</button>
