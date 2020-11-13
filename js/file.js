@@ -21,7 +21,7 @@ let roleNames = Array.from(document.querySelectorAll("[id^='role']"));
 
 // number of characters for each role
 let roleNo = Array.from(document.querySelectorAll("[id$='-no']"));
-console.log(roleNo);
+// console.log(roleNo);
 
 // turn counter to be updated after all characters played.
 let turnNo = document.querySelector('#turn-number');
@@ -64,6 +64,32 @@ startButton.onclick = function(){
 };
 
 let nextSceneButton = document.querySelector('#btn-next-scene');
+nextSceneButton.onclick = function(){
+    turnNo.innerHTML = 'Rodada ' + sceneNo;
+    while(!listOfScenes[sceneStep][0]()){
+        sceneStep++;
+        if(sceneStep >= listOfScenes.length){
+            sceneNo ++;
+            sceneStep = 0;
+        }
+    }
+    // console.log(listOfScenes[sceneStep]);
+    // console.log(sceneStep);
+    playerFigures[0].src = listOfScenes[sceneStep][1];
+    gameText.innerHTML = listOfScenes[sceneStep][2];
+    if(listOfScenes[sceneStep][3] == 'stop'){
+        currentSong.load();
+    }else if(listOfScenes[sceneStep][3] != currentSong){
+        currentSong.load();
+        currentSong = listOfScenes[sceneStep][3];
+        currentSong.play();
+    }
+    sceneStep++;
+    if(sceneStep >= listOfScenes.length){
+        sceneNo ++;
+        sceneStep = 0;
+    }
+}
 
 let shuffleCharactersButton = document.querySelector('#btn-shuffle-characters');
 shuffleCharactersButton.onclick = function(){
@@ -158,6 +184,7 @@ let jirafalesFlorinda = document.getElementById('jirafales-florinda');
 let mascara = document.getElementById('mascara');
 let misteriosDaMeiaNoite = document.getElementById('misterios-da-meia-noite');
 let vamos = document.getElementById('vamos');
+let currentSong = misteriosDaMeiaNoite;
 
 /*
 ----------------------------------------------------------------------------------
@@ -169,6 +196,7 @@ events.
 
 let playerNo = 0; // will be updated when the shuffle button is activated.
 let sceneNo = 0; // current turn (must be updated to turnNo label).
+let sceneStep = 0; // denotes the part of the scene that is being played (cursor in listOfScenes).
 
 // roles & pictures: will be used to create data structures for the chosen players.
 // roles contain the role names, pictures contain path to their PNG files.
@@ -177,6 +205,18 @@ let roles = ['aldeão', 'bruxa', 'caçador', 'cupido', 'vidente', 'raposa', 'lob
 
 let pictures = ['img/villager.PNG', 'img/witch.PNG', 'img/hunter.PNG', 'img/cupid.PNG',
 'img/seer.PNG', 'img/fox.PNG', 'img/werewolf.PNG', 'img/white-werewolf.PNG'];
+
+// indexes to the above arrays reference the roles below:
+
+const VILLAGER = 0;
+const WITCH = 1;
+const HUNTER = 2;
+const CUPID = 3;
+const SEER = 4;
+const FOX = 5;
+const WEREWOLF = 6;
+const WHITE_WEREWOLF = 7;
+
 
 let charactersList = [];
 class character {
@@ -211,7 +251,42 @@ class character {
     }
 }
 
-//initialize empty list of characters
+// initialize empty list of characters
 for (let i = 0; i < 10; i++){
     charactersList.push(new character('Player ' + i, 'role', 'picture'));
 }
+
+// list of scenes
+// format: condition to play the scene (or otherwise skip it) / image / text / song
+
+let listOfScenes = [
+    [function(){return sceneNo == 1}, 'img/village.PNG', 'Os habitantes descobrem os seus papéis secretos.', 
+    mascara],
+    [function(){return sceneNo == 1}, 'img/night.PNG', 'A PRIMEIRA NOITE. Uma estranha magia invade Miller\'s Hollow.', 
+    misteriosDaMeiaNoite],
+    [function(){return sceneNo != 1}, 'img/night.PNG', 'UMA NOITE NA VILA. Os seres sobrenaturais se preparam para agir.', 
+    misteriosDaMeiaNoite],
+    [function(){return(roleNo[CUPID].value>0 && sceneNo == 1)}, 'img/cupid.PNG', 'O CUPIDO. Escolhe dois jogadores para atirar-lhes flechas.',
+    estupidoCupido],
+    [function(){return(roleNo[SEER].value>0)}, 'img/seer.PNG', 'A VIDENTE. Descobre a identidade de um jogador à sua escolha.',
+    euNasciHa10MilAnosAtras],
+    [function(){return(roleNo[FOX].value>0)}, 'img/fox.PNG', 'A RAPOSA. Se quiser ativar os seus poderes, aponta para um jogador' + 
+    'e descobre se, entre este jogador e seus dois vizinhos, há pelo menos um lobisomem.' +
+    ' Caso não haja nenhum lobisomem, ela perde os seus poderes pelo resto do jogo.',
+    euNasciHa10MilAnosAtras],
+    [function(){return(roleNo[CUPID].value>0 && sceneNo == 1)}, 'img/lovers.PNG', 'OS AMANTES. Os jogadores flechados' + 
+    ' pelo cupido se reconhecem. Se um dos dois morrer, o outro também morrerá de solidão.',
+    jirafalesFlorinda],
+    [function(){return(roleNo[WEREWOLF].value>0)}, 'img/werewolf.PNG', 'OS LOBISOMENS. A matilha se reúne e vota em um jogador para ser devorado.',
+    misteriosDaMeiaNoite],
+    [function(){return(roleNo[WHITE_WEREWOLF].value>0 && sceneNo%2==1)}, 'img/white-werewolf.PNG', 'O LOBISOMEM BRANCO odeia tanto os humanos ' +  
+    'quanto os demais lobismonens. Alimenta-se de humanos com o resto da matilha, mas, a cada duas noites, pode devorar outro lobisomem.',
+    misteriosDaMeiaNoite],
+    [function(){return(roleNo[WITCH].value>0)}, 'img/witch.PNG', 'A BRUXA possui uma poção de cura e outra letal. Cada uma só pode ser usada uma vez.',
+    aCucaTePega],
+    [function(){return true}, 'img/day.PNG', 'UM DIA NA VILA. A vila desperta, todos abrem seus olhos...', 
+    'stop'],
+    [function(){return true}, 'img/village.PNG', 'OS HABITANTES DISCUTEM. Quem será condenado à forca hoje?', 
+    vamos],
+];
+
