@@ -40,11 +40,11 @@ for(let i = 0; i < eliminateButtons.length; i++){
         // console.log(i);
         // console.log(charactersList[i]);
         if (this.innerHTML == 'ELIMINAR'){
-            playerFigures[i + 1].src = charactersList[i].picture;
+            playerFigures[i].src = charactersList[i].picture;
             roleNo[charactersList[i].fellows].value--; // update number of characters with this role
             this.innerHTML = 'RESTAURAR';
         }else{
-            playerFigures[i + 1].src = 'img/question-mark.png';
+            playerFigures[i].src = 'img/question-mark.png';
             roleNo[charactersList[i].fellows].value++; // update number of characters with this role
             this.innerHTML = 'ELIMINAR';
         }
