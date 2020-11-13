@@ -37,13 +37,15 @@ let eliminateButtons = document.querySelectorAll("[id^='btn-eliminate-']");
 
 for(let i = 0; i < eliminateButtons.length; i++){
     eliminateButtons[i].onclick = function(){
-        console.log(i);
-        console.log(charactersList[i]);
+        // console.log(i);
+        // console.log(charactersList[i]);
         if (this.innerHTML == 'ELIMINAR'){
             playerFigures[i + 1].src = charactersList[i].picture;
+            roleNo[charactersList[i].fellows].value--; // update number of characters with this role
             this.innerHTML = 'RESTAURAR';
         }else{
             playerFigures[i + 1].src = 'img/question-mark.png';
+            roleNo[charactersList[i].fellows].value++; // update number of characters with this role
             this.innerHTML = 'ELIMINAR';
         }
     }
@@ -136,6 +138,7 @@ shuffleCharactersButton.onclick = function(){
             roleNames[shuffledNumber].innerHTML = roles[i];
             charactersList[shuffledNumber].role = roles[i];
             charactersList[shuffledNumber].picture = pictures[i];
+            charactersList[shuffledNumber].fellows = i;
             charsTaken++;
         } 
     }   
@@ -206,7 +209,7 @@ let roles = ['aldeão', 'bruxa', 'caçador', 'cupido', 'vidente', 'raposa', 'lob
 let pictures = ['img/villager.PNG', 'img/witch.PNG', 'img/hunter.PNG', 'img/cupid.PNG',
 'img/seer.PNG', 'img/fox.PNG', 'img/werewolf.PNG', 'img/white-werewolf.PNG'];
 
-// indexes to the above arrays reference the roles below:
+// indexes (codes) to the above arrays reference the roles below:
 
 const VILLAGER = 0;
 const WITCH = 1;
@@ -220,10 +223,11 @@ const WHITE_WEREWOLF = 7;
 
 let charactersList = [];
 class character {
-    constructor(player, role, picture){
+    constructor(player, role, picture, fellows){
         this._player = player;
         this._role = role;
         this._picture = picture;
+        this._fellows = fellows; // code to find character's role in array of roles
     }
 
     get player(){
@@ -249,11 +253,19 @@ class character {
     set picture(newPicture){
         this._picture = newPicture;
     }
+
+    get fellows(){
+        return this._fellows;
+    }
+
+    set fellows(newFellows){
+        this._fellows = newFellows;
+    }
 }
 
 // initialize empty list of characters
 for (let i = 0; i < 10; i++){
-    charactersList.push(new character('Player ' + i, 'role', 'picture'));
+    charactersList.push(new character('Player ' + i, 'role', 'picture', 'fellows'));
 }
 
 // list of scenes
@@ -266,18 +278,18 @@ let listOfScenes = [
     misteriosDaMeiaNoite],
     [function(){return sceneNo != 1}, 'img/night.PNG', 'UMA NOITE NA VILA. Os seres sobrenaturais se preparam para agir.', 
     misteriosDaMeiaNoite],
-    [function(){return(roleNo[CUPID].value>0 && sceneNo == 1)}, 'img/cupid.PNG', 'O CUPIDO. Escolhe dois jogadores para atirar-lhes flechas.',
+    [function(){return(roleNo[CUPID].value>0 && sceneNo == 1)}, 'img/cupid.PNG', 'O CUPIDO escolhe dois jogadores para atirar-lhes flechas.',
     estupidoCupido],
-    [function(){return(roleNo[SEER].value>0)}, 'img/seer.PNG', 'A VIDENTE. Descobre a identidade de um jogador à sua escolha.',
+    [function(){return(roleNo[SEER].value>0)}, 'img/seer.PNG', 'A VIDENTE descobre a identidade de um jogador à sua escolha.',
     euNasciHa10MilAnosAtras],
-    [function(){return(roleNo[FOX].value>0)}, 'img/fox.PNG', 'A RAPOSA. Se quiser ativar os seus poderes, aponta para um jogador' + 
-    'e descobre se, entre este jogador e seus dois vizinhos, há pelo menos um lobisomem.' +
+    [function(){return(roleNo[FOX].value>0)}, 'img/fox.PNG', 'A RAPOSA, se quiser ativar os seus poderes, escolhe um jogador' + 
+    'e descobre se, entre ele e seus dois vizinhos, há pelo menos um lobisomem.' +
     ' Caso não haja nenhum lobisomem, ela perde os seus poderes pelo resto do jogo.',
     euNasciHa10MilAnosAtras],
-    [function(){return(roleNo[CUPID].value>0 && sceneNo == 1)}, 'img/lovers.PNG', 'OS AMANTES. Os jogadores flechados' + 
-    ' pelo cupido se reconhecem. Se um dos dois morrer, o outro também morrerá de solidão.',
+    [function(){return(roleNo[CUPID].value>0 && sceneNo == 1)}, 'img/lovers.PNG', 'OS AMANTES flechados pelo cupido' + 
+    ' se reconhecem. Se um dos dois morrer, o outro também morrerá de solidão.',
     jirafalesFlorinda],
-    [function(){return(roleNo[WEREWOLF].value>0)}, 'img/werewolf.PNG', 'OS LOBISOMENS. A matilha se reúne e vota em um jogador para ser devorado.',
+    [function(){return(roleNo[WEREWOLF].value>0)}, 'img/werewolf.PNG', 'OS LOBISOMENS se reunem e votam em um jogador para ser devorado.',
     misteriosDaMeiaNoite],
     [function(){return(roleNo[WHITE_WEREWOLF].value>0 && sceneNo%2==1)}, 'img/white-werewolf.PNG', 'O LOBISOMEM BRANCO odeia tanto os humanos ' +  
     'quanto os demais lobismonens. Alimenta-se de humanos com o resto da matilha, mas, a cada duas noites, pode devorar outro lobisomem.',
