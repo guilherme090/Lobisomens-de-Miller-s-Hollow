@@ -62,7 +62,8 @@ startButton.onclick = function(){
             playerNames[i].innerHTML = playerNamesFromInput[i].value;
         } 
     }
-    console.log(charactersList);
+    // console.log(charactersList);
+    stateMachine(states.GAME_STARTED);  
 };
 
 let nextSceneButton = document.querySelector('#btn-next-scene');
@@ -142,7 +143,8 @@ shuffleCharactersButton.onclick = function(){
             charactersList[shuffledNumber].fellows = i;
             charsTaken++;
         } 
-    }   
+    } 
+    stateMachine(states.GAME_READY_TO_START);  
 };
 
 let clearPlayersButton = document.querySelector('#btn-clear-players');
@@ -278,33 +280,124 @@ for (let i = 0; i < 10; i++){
 // format: condition to play the scene (or otherwise skip it) / image / text / song
 
 let listOfScenes = [
-    [function(){return sceneNo == 1}, 'img/actor.PNG', 'Os habitantes descobrem os seus papéis secretos.', 
+    [function(){return sceneNo == 1}, 'img/actor.PNG', 'REVELAÇÃO. <br>Os habitantes descobrem os seus papéis secretos.', 
     mascara],
-    [function(){return sceneNo == 1}, 'img/night.PNG', 'A PRIMEIRA NOITE. Uma estranha magia invade Miller\'s Hollow.', 
+    [function(){return sceneNo == 1}, 'img/night.PNG', 'A PRIMEIRA NOITE. <br>Uma estranha magia invade Miller\'s Hollow.', 
     'stop'],
-    [function(){return sceneNo != 1}, 'img/night.PNG', 'UMA NOITE NA VILA. Os seres sobrenaturais se preparam para agir.', 
+    [function(){return sceneNo != 1}, 'img/night.PNG', 'UMA NOITE NA VILA. <br>Os seres sobrenaturais se preparam para agir.', 
     blueMoon],
     [function(){return(roleNo[CUPID].value>0 && sceneNo == 1)}, 'img/cupid.PNG', 'O CUPIDO escolhe dois jogadores para atirar-lhes flechas.',
     estupidoCupido],
     [function(){return(roleNo[SEER].value>0)}, 'img/seer.PNG', 'A VIDENTE descobre a identidade de um jogador à sua escolha.',
     blueMoon],
     [function(){return(roleNo[FOX].value>0)}, 'img/fox.PNG', 'A RAPOSA, se quiser ativar os seus poderes, escolhe um jogador' + 
-    ' e descobre se, entre ele e seus dois vizinhos, há pelo menos um lobisomem.' +
+    ' e descobre se, entre ele e seus dois vizinhos, há pelo menos um lobisomem. <br>' +
     ' Caso não haja nenhum lobisomem, ela perde os seus poderes pelo resto do jogo.',
     blueMoon],
     [function(){return(roleNo[CUPID].value>0 && sceneNo == 1)}, 'img/lovers.PNG', 'OS AMANTES flechados pelo cupido' + 
-    ' se reconhecem. Se um dos dois morrer, o outro também morrerá de solidão.',
+    ' se reconhecem. <br>Se um dos dois morrer, o outro também morrerá de solidão.',
     jirafalesFlorinda],
     [function(){return(roleNo[WEREWOLF].value>0)}, 'img/werewolf.PNG', 'OS LOBISOMENS se reunem e votam em um jogador para ser devorado.',
     misteriosDaMeiaNoite],
     [function(){return(roleNo[WHITE_WEREWOLF].value>0 && sceneNo%2==1)}, 'img/white-werewolf.PNG', 'O LOBISOMEM BRANCO odeia tanto os humanos ' +  
-    'quanto os demais lobismonens. Alimenta-se de humanos com o resto da matilha, mas, a cada duas noites, pode devorar outro lobisomem.',
+    'quanto os demais lobismonens. <br>Alimenta-se de humanos com o resto da matilha, mas, a cada duas noites, pode devorar outro lobisomem.',
     misteriosDaMeiaNoite],
     [function(){return(roleNo[WITCH].value>0)}, 'img/witch.PNG', 'A BRUXA possui uma poção de cura e outra letal. Cada uma só pode ser usada uma vez.',
     aCucaTePega],
-    [function(){return true}, 'img/day.PNG', 'UM DIA NA VILA. A vila desperta, todos abrem seus olhos...', 
+    [function(){return true}, 'img/day.PNG', 'UM DIA NA VILA. <br>A vila desperta, todos abrem seus olhos...', 
     ira],
-    [function(){return true}, 'img/village.PNG', 'OS HABITANTES DISCUTEM. Quem será condenado à forca hoje?', 
+    [function(){return true}, 'img/village.PNG', 'OS HABITANTES DISCUTEM. <br>Quem será condenado à forca hoje?', 
     vamos],
 ];
+
+/* 
+----------------------------------------------------------------------------------
+State Machine
+----------------------------------------------------------------------------------
+This part of the code configures every button that must be activated or
+deactivated depending on the program's state to prevent users from activating
+forbidden functions (like starting a quiz without a verb list).
+*/ 
+
+const states = {
+    CHARACTER_SELECTION: 'character-selection',
+    GAME_READY_TO_START: 'game-ready-to-start', 
+    GAME_STARTED: 'game-started'
+};
+
+stateMachine(states.CHARACTER_SELECTION);
+
+function stateMachine(currentState){
+    if(!currentState){
+        throw new Error('State is not defined');
+    }
+    switch(currentState){
+        case states.CHARACTER_SELECTION:
+            // Input Setup
+            gameText.innerHTML = 'Escolha o número de cada personagem a participar do jogo. O número total de personagens não pode exceder 10.';
+            setArrayDisabled(playerNamesFromInput, false, 'input'); // interface for choosing player names and characters is active during setup.
+            setArrayDisabled(roleNo, false, 'input');
+
+            // Button Setup
+            setArrayDisabled(eliminateButtons, true, 'button'); // characters are not eliminated during setup.
+            setButtonDisabled(startButton, true); // game must be shuffled before starting.
+            setButtonDisabled(nextSceneButton, true);
+            setButtonDisabled(shuffleCharactersButton, false);
+            setButtonDisabled(clearPlayersButton, false);
+
+            break;
+        case states.GAME_READY_TO_START:
+            // Input Setup
+            gameText.innerHTML = 'O jogo foi sorteado. Você pode fazer novo sorteio ou escrever os nomes dos jogadores e clicar no botão COMEÇAR JOGO.';
+            setArrayDisabled(playerNamesFromInput, false, 'input'); // interface for choosing player names and characters is active during setup.
+            setArrayDisabled(roleNo, false, 'input');
+
+            // Button Setup
+            setArrayDisabled(eliminateButtons, true, 'button'); // characters are not eliminated during setup.
+            setButtonDisabled(startButton, false); // game must be shuffled before starting.
+            setButtonDisabled(nextSceneButton, true);
+            setButtonDisabled(shuffleCharactersButton, false);
+            setButtonDisabled(clearPlayersButton, false);
+
+            break;
+        case states.GAME_STARTED:
+            // Input Setup
+            gameText.innerHTML = 'O jogo começou. Proceda com o botão PRÓXIMA CENA.';
+            setArrayDisabled(playerNamesFromInput, true, 'input'); // interface for choosing player names and characters is not active during game.
+            setArrayDisabled(roleNo, true, 'input');
+
+            // Button Setup
+            setArrayDisabled(eliminateButtons, false, 'button'); // characters are eliminated during game.
+            setButtonDisabled(startButton, true); 
+            setButtonDisabled(nextSceneButton, false);
+            setButtonDisabled(shuffleCharactersButton, true); 
+            setButtonDisabled(clearPlayersButton, true);
+
+            break;
+    }
+}
+
+// support function to disable an entire array of inputs.
+// mode is true for disabled and false for not disabled
+// type is 'button' for buttons (a different function will be called to customize it)
+
+function setArrayDisabled(arrayToDisable, mode, type){
+    for(let i = 0; i < arrayToDisable.length; i++){
+        if(type == 'button'){
+            setButtonDisabled(arrayToDisable[i], mode);
+        }else{
+            arrayToDisable[i].disabled = mode;
+        }       
+    }
+}
+
+
+function setButtonDisabled(buttonToDisable, mode){
+    buttonToDisable.disabled = mode;
+    if(mode == true){
+        buttonToDisable.style.backgroundColor = "#330000"; 
+    }else{
+        buttonToDisable.style.backgroundColor = "#B5651D"; 
+    }  
+}
 
