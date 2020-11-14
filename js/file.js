@@ -175,8 +175,6 @@ Game display and player tokens
 // position 0 is for display picture. 1-10 are for players.
 let playerFigures = document.querySelectorAll("[id^='display']");
 let boardSkin = document.querySelector('#board');
-// boardSkin.style.backgroundImage = 'url(img/cover.PNG)';
-// boardSkin.style.backgroundRepeat = 'no-repeat';
 console.log(playerFigures);
 
 /*
@@ -335,11 +333,11 @@ function stateMachine(currentState){
         case states.CHARACTER_SELECTION:
             // Input Setup
             gameText.innerHTML = 'Escolha o número de cada personagem a participar do jogo. O número total de personagens não pode exceder 10.';
-            setArrayDisabled(playerNamesFromInput, false, 'input'); // interface for choosing player names and characters is active during setup.
-            setArrayDisabled(roleNo, false, 'input');
+            setArrayDisabled(playerNamesFromInput, false, 'input', playerNamesFromInput.length); // interface for choosing player names and characters is active during setup.
+            setArrayDisabled(roleNo, false, 'input', roleNo.length);
 
             // Button Setup
-            setArrayDisabled(eliminateButtons, true, 'button'); // characters are not eliminated during setup.
+            setArrayDisabled(eliminateButtons, true, 'button', eliminateButtons.length); // characters are not eliminated during setup.
             setButtonDisabled(startButton, true); // game must be shuffled before starting.
             setButtonDisabled(nextSceneButton, true);
             setButtonDisabled(shuffleCharactersButton, false);
@@ -349,11 +347,11 @@ function stateMachine(currentState){
         case states.GAME_READY_TO_START:
             // Input Setup
             gameText.innerHTML = 'O jogo foi sorteado. Você pode fazer novo sorteio ou escrever os nomes dos jogadores e clicar no botão COMEÇAR JOGO.';
-            setArrayDisabled(playerNamesFromInput, false, 'input'); // interface for choosing player names and characters is active during setup.
-            setArrayDisabled(roleNo, false, 'input');
+            setArrayDisabled(playerNamesFromInput, false, 'input', playerNo); // interface for choosing player names and characters is active during setup.
+            setArrayDisabled(roleNo, false, 'input', roleNo.length);
 
             // Button Setup
-            setArrayDisabled(eliminateButtons, true, 'button'); // characters are not eliminated during setup.
+            setArrayDisabled(eliminateButtons, true, 'button', eliminateButtons.length); // characters are not eliminated during setup.
             setButtonDisabled(startButton, false); // game must be shuffled before starting.
             setButtonDisabled(nextSceneButton, true);
             setButtonDisabled(shuffleCharactersButton, false);
@@ -363,11 +361,11 @@ function stateMachine(currentState){
         case states.GAME_STARTED:
             // Input Setup
             gameText.innerHTML = 'O jogo começou. Proceda com o botão PRÓXIMA CENA.';
-            setArrayDisabled(playerNamesFromInput, true, 'input'); // interface for choosing player names and characters is not active during game.
-            setArrayDisabled(roleNo, true, 'input');
+            setArrayDisabled(playerNamesFromInput, true, 'input', playerNamesFromInput.length); // interface for choosing player names and characters is not active during game.
+            setArrayDisabled(roleNo, true, 'input', roleNo.length);
 
             // Button Setup
-            setArrayDisabled(eliminateButtons, false, 'button'); // characters are eliminated during game.
+            setArrayDisabled(eliminateButtons, false, 'button', playerNo); // characters are eliminated during game.
             setButtonDisabled(startButton, true); 
             setButtonDisabled(nextSceneButton, false);
             setButtonDisabled(shuffleCharactersButton, true); 
@@ -377,20 +375,33 @@ function stateMachine(currentState){
     }
 }
 
-// support function to disable an entire array of inputs.
-// mode is true for disabled and false for not disabled
-// type is 'button' for buttons (a different function will be called to customize it)
+/* 
+----------------------------------------------------------------------------------
+Support function to disable an entire array of inputs.
+----------------------------------------------------------------------------------
+mode is true for disabled and false for not disabled
+type is 'button' for buttons (a different function will be called to customize it)
+howMany refers to the number of elements that will be abled or disabled. The others will receive the opposite effect.
+*/  
 
-function setArrayDisabled(arrayToDisable, mode, type){
+function setArrayDisabled(arrayToDisable, mode, type, howMany){
     for(let i = 0; i < arrayToDisable.length; i++){
         if(type == 'button'){
-            setButtonDisabled(arrayToDisable[i], mode);
+            if(i < howMany){
+                setButtonDisabled(arrayToDisable[i], mode);
+            }else{
+                setButtonDisabled(arrayToDisable[i], !mode);
+            }           
         }else{
-            arrayToDisable[i].disabled = mode;
+            if(i < howMany){
+                arrayToDisable[i].disabled = mode;
+            }else{
+                arrayToDisable[i].disabled = !mode;
+            }
+            
         }       
     }
 }
-
 
 function setButtonDisabled(buttonToDisable, mode){
     buttonToDisable.disabled = mode;
