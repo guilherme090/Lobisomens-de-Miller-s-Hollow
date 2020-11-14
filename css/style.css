@@ -86,9 +86,17 @@ body{
 
 /* Character buttons */
 
+#villager-name{
+    border-left: 6px solid brown;
+}
+
 #villager-no{
     color:white;
     background-color: brown;
+}
+
+#witch-name{
+    border-left: 6px solid purple;
 }
 
 #witch-no{
@@ -96,9 +104,17 @@ body{
     background-color: purple;
 }
 
+#hunter-name{
+    border-left: 6px solid olivedrab;
+}
+
 #hunter-no{
     color:white;
     background-color: olivedrab;
+}
+
+#cupid-name{
+    border-left: 6px solid magenta;
 }
 
 #cupid-no{
@@ -106,9 +122,17 @@ body{
     background-color: magenta;
 }
 
+#seer-name{
+    border-left: 6px solid gray;
+}
+
 #seer-no{
     color:white;
     background-color: gray;
+}
+
+#fox-name{
+    border-left: 6px solid orangered;
 }
 
 #fox-no{
@@ -116,9 +140,17 @@ body{
     background-color: orangered;
 }
 
+#werewolf-name{
+    border-left: 6px solid black;
+}
+
 #werewolf-no{
     color:white;
     background-color: black;
+}
+
+#white-werewolf-name{
+    border-left: 6px solid white;
 }
 
 #white-werewolf-no{
