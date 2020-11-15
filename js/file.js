@@ -78,7 +78,6 @@ nextSceneButton.onclick = function(){
     }
     // console.log(listOfScenes[sceneStep]);
     // console.log(sceneStep);
-    // playerFigures[0].style.backgroundImage = url(listOfScenes[sceneStep][1]);
     boardSkin.style.backgroundImage = 'url(' + listOfScenes[sceneStep][1] + ')';
     gameText.innerHTML = listOfScenes[sceneStep][2];
     if(listOfScenes[sceneStep][3] == 'stop'){
@@ -87,6 +86,7 @@ nextSceneButton.onclick = function(){
         currentSong.load();
         currentSong = listOfScenes[sceneStep][3];
         currentSong.play();
+        currentSong.volume = volumeSlider.value / 1000;
     }
     sceneStep++;
     if(sceneStep >= listOfScenes.length){
@@ -164,6 +164,11 @@ hideButton.onclick = function(){
         }
     }
 };
+
+let volumeSlider = document.querySelector('#volume-slider');
+volumeSlider.oninput = function(){
+    currentSong.volume = volumeSlider.value / 1000;
+}
 
 /*
 ----------------------------------------------------------------------------------
