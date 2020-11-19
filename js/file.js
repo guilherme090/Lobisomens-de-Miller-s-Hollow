@@ -86,7 +86,7 @@ nextSceneButton.onclick = function(){
         currentSong.load();
         currentSong = listOfScenes[sceneStep][3];
         currentSong.play();
-        currentSong.volume = volumeSlider.value / 1000;
+        currentSong.volume = volumeSlider.value / 500;
     }
     sceneStep++;
     if(sceneStep >= listOfScenes.length){

@@ -29,7 +29,7 @@ body{
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    background-color: brown;
+    background-color: rgb(7, 1, 36);
 }
 
 [type="inside-the-screen"]{
@@ -37,6 +37,7 @@ body{
 }
 
 #board-row1, #board-row2, #board-row3{
+    margin-top: 10px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -57,11 +58,11 @@ body{
 /* There is an empty space between players 5 and 6, so number 5's margin-right is adjusted */
 
 #name05{
-    margin-right: 180px;
+    margin-right: 220px;
 }
 
 #display05{
-    margin-right: 180px;
+    margin-right: 220px;
 }
 
 #board-row1 > div, #board-row2 > div, #board-row3 > div{
