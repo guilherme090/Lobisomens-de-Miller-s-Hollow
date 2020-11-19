@@ -217,8 +217,8 @@ let sceneStep = 0; // denotes the part of the scene that is being played (cursor
 let roles = ['aldeão', 'bruxa', 'caçador', 'cupido', 'vidente', 'raposa', 'lobisomem',
 'lobisomem branco'];
 
-let pictures = ['img/villager.PNG', 'img/witch.PNG', 'img/hunter.PNG', 'img/cupid.PNG',
-'img/seer.PNG', 'img/fox.PNG', 'img/werewolf.PNG', 'img/white-werewolf.PNG'];
+let pictures = ['img/villager-tkn.PNG', 'img/witch-tkn.PNG', 'img/hunter-tkn.PNG', 'img/cupid-tkn.PNG',
+'img/seer-tkn.PNG', 'img/fox-tkn.PNG', 'img/werewolf-tkn.PNG', 'img/white-werewolf-tkn.PNG'];
 
 // indexes (codes) to the above arrays reference the roles below:
 

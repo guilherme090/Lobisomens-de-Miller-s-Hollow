@@ -53,6 +53,7 @@ body{
     /* transform: translateY(-100%); */
     text-align: center;
     color: white;
+    background-color: rgb(255, 130, 0);
 }
 
 /* There is an empty space between players 5 and 6, so number 5's margin-right is adjusted */
