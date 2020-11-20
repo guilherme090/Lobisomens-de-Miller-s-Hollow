@@ -283,29 +283,31 @@ for (let i = 0; i < 10; i++){
 // format: condition to play the scene (or otherwise skip it) / image / text / song
 
 let listOfScenes = [
-    [function(){return sceneNo == 1}, 'img/actor.PNG', 'REVELAÇÃO. <br>Os habitantes descobrem os seus papéis secretos.', 
+    [function(){return sceneNo == 1}, 'img/revelation.PNG', 'REVELAÇÃO. <br>Os habitantes descobrem os seus papéis secretos.', 
     mascara],
-    [function(){return sceneNo == 1}, 'img/night.PNG', 'A PRIMEIRA NOITE. <br>Uma estranha magia invade Miller\'s Hollow.', 
+    [function(){return sceneNo == 1}, 'img/night-cover.PNG', 'A PRIMEIRA NOITE. <br>Uma estranha magia invade Miller\'s Hollow.', 
     'stop'],
-    [function(){return sceneNo != 1}, 'img/night.PNG', 'UMA NOITE NA VILA. <br>Os seres sobrenaturais se preparam para agir.', 
+    [function(){return sceneNo != 1}, 'img/night-cover.PNG', 'UMA NOITE NA VILA. <br>Os seres sobrenaturais se preparam para agir.', 
     blueMoon],
-    [function(){return(roleNo[CUPID].value>0 && sceneNo == 1)}, 'img/cupid.PNG', 'O CUPIDO escolhe dois jogadores para atirar-lhes flechas.',
+    [function(){return(roleNo[CUPID].value>0 && sceneNo == 1)}, 'img/cupid-cover.PNG', 'O CUPIDO escolhe dois jogadores para atirar-lhes' + 
+    'flechas. Esses jogadores terão que se proteger pelo resto do jogo.',
     estupidoCupido],
-    [function(){return(roleNo[SEER].value>0)}, 'img/seer.PNG', 'A VIDENTE descobre a identidade de um jogador à sua escolha.',
+    [function(){return(roleNo[SEER].value>0)}, 'img/seer-cover.PNG', 'A VIDENTE, de posse de sua bola de cristal, descobre a identidade de um jogador à sua escolha.',
     blueMoon],
-    [function(){return(roleNo[FOX].value>0)}, 'img/fox.PNG', 'A RAPOSA, se quiser ativar os seus poderes, escolhe um jogador' + 
+    [function(){return(roleNo[FOX].value>0)}, 'img/fox-cover.PNG', 'A RAPOSA, se quiser ativar os seus poderes, escolhe um jogador' + 
     ' e descobre se, entre ele e seus dois vizinhos, há pelo menos um lobisomem. <br>' +
     ' Caso não haja nenhum lobisomem, ela perde os seus poderes pelo resto do jogo.',
     blueMoon],
-    [function(){return(roleNo[CUPID].value>0 && sceneNo == 1)}, 'img/lovers.PNG', 'OS AMANTES flechados pelo cupido' + 
+    [function(){return(roleNo[CUPID].value>0 && sceneNo == 1)}, 'img/lovers-cover.PNG', 'OS AMANTES flechados pelo cupido' + 
     ' se reconhecem. <br>Se um dos dois morrer, o outro também morrerá de solidão.',
     jirafalesFlorinda],
-    [function(){return(roleNo[WEREWOLF].value>0)}, 'img/werewolf.PNG', 'OS LOBISOMENS se reunem e votam em um jogador para ser devorado.',
+    [function(){return(roleNo[WEREWOLF].value>0)}, 'img/werewolf-cover.PNG', 'O encontro da matilha. <br>OS LOBISOMENS se reunem e votam em um jogador para ser devorado.',
     misteriosDaMeiaNoite],
-    [function(){return(roleNo[WHITE_WEREWOLF].value>0 && sceneNo%2==1)}, 'img/white-werewolf.PNG', 'O LOBISOMEM BRANCO odeia tanto os humanos ' +  
+    [function(){return(roleNo[WHITE_WEREWOLF].value>0 && sceneNo%2==1)}, 'img/white-werewolf-cover.PNG', 'O LOBISOMEM BRANCO odeia tanto os humanos ' +  
     'quanto os demais lobismonens. <br>Alimenta-se de humanos com o resto da matilha, mas, a cada duas noites, pode devorar outro lobisomem.',
     misteriosDaMeiaNoite],
-    [function(){return(roleNo[WITCH].value>0)}, 'img/witch.PNG', 'A BRUXA possui uma poção de cura e outra letal. Cada uma só pode ser usada uma vez.',
+    [function(){return(roleNo[WITCH].value>0)}, 'img/witch-cover.PNG', 'A BRUXA possui uma poção de cura e outra letal. Cada uma só pode ser usada uma vez,' + 
+    ' sendo possível utilizar as duas na mesma noite.',
     aCucaTePega],
     [function(){return true}, 'img/day.PNG', 'UM DIA NA VILA. <br>A vila desperta, todos abrem seus olhos...', 
     ira],
@@ -413,7 +415,6 @@ function setButtonDisabled(buttonToDisable, mode){
     if(mode == true){
         buttonToDisable.style.backgroundColor = "#330000"; 
     }else{
-        buttonToDisable.style.backgroundColor = "#B5651D"; 
+        buttonToDisable.style.backgroundColor = "#FF8200"; 
     }  
 }
-

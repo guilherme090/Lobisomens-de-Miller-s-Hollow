@@ -4,13 +4,21 @@
 
 body{
     background-color: wheat;
+    background-image: url("../img/bgn.PNG");
+    background-size: 50px;
+}
+
+#title{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* The players' board */
 #screen{
     width: 50%;
     float: left;
-    background-color: burlywood;
+    background-color: rgb(204, 162, 107);
     height: 428px;
 }
 
@@ -76,13 +84,13 @@ body{
     justify-content: center;
     border-style: solid;
     text-align: center;
-    background-color: snow;
+    background-color: rgb(204, 162, 107);
 }
 
 /* The buttons */
 
 .btn{
-    background-color: rgb(181, 101, 29);
+    background-color: rgb(255, 130, 0);
     color: snow;
 }
 
