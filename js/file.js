@@ -62,6 +62,27 @@ startButton.onclick = function(){
             playerNames[i].innerHTML = playerNamesFromInput[i].value;
         } 
     }
+
+    // fecth secret roles to create initial Discord message
+
+    // initial message: created so the discord adm has access to the secret roles.
+
+    function createInitialMessage(){
+        var d = new Date();
+        let initialMessage = '***************************\nNovo jogo iniciado em ' +
+         d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() + ' - ' +
+         d.getHours() + ':' + d.getMinutes() + '\n***************************\n';
+        for (let i=0; i<playerNo; i++){
+            initialMessage += playerNames[i].innerHTML + ' - ' + roleNames[i].innerHTML + '\n';
+        }
+        return initialMessage;
+    }
+
+    msgSecretRoles[1] = {
+        "content": createInitialMessage()
+    }
+    sendMessage(msgSecretRoles[0], msgSecretRoles[1]);
+
     // console.log(charactersList);
     stateMachine(states.GAME_STARTED);  
 };
@@ -88,6 +109,13 @@ nextSceneButton.onclick = function(){
         currentSong.play();
         currentSong.volume = volumeSlider.value / 500;
     }
+
+    // Send a message to the Telegram webhook bot.
+    if(listOfScenes[sceneStep][4] != null){
+        sendMessage(listOfScenes[sceneStep][4][0], listOfScenes[sceneStep][4][1])    
+    }
+    
+
     sceneStep++;
     if(sceneStep >= listOfScenes.length){
         sceneNo ++;
@@ -170,6 +198,29 @@ volumeSlider.oninput = function(){
     currentSong.volume = volumeSlider.value / 1000;
 }
 
+var txtRead = [];
+
+const botsButton = document.querySelector('#btn-load-discord-channels');
+botsButton.addEventListener('input', function(e){
+    // save channel webhook keys to proper variables
+    var fr = new FileReader();
+    fr.onload = function(){
+        txtRead = (fr.result.split('*'));
+        console.log(txtRead);
+        msgSecretRoles[0] = txtRead[0];
+        msgCupid[0] = txtRead[1];
+        msgSeer[0] = txtRead[2];
+        msgFox[0] = txtRead[3];
+        msgWitch[0] = txtRead[4];
+        msgHunter[0] = txtRead[5];
+        msgLovers[0] = txtRead[6];
+        msgWerewolves[0] = txtRead[7];
+        msgWhiteWerewolf[0] = txtRead[8];       
+    }
+    fr.readAsText(this.files[0]);
+    // console.log('Texto lido:' + txtRead);
+});
+
 /*
 ----------------------------------------------------------------------------------
 Images
@@ -238,7 +289,7 @@ class character {
         this._player = player;
         this._role = role;
         this._picture = picture;
-        this._fellows = fellows; // code to find character's role in array of roles
+        this._fellows = fellows; // code to find character's role in array of roles (shows people with the same role as him/her)
     }
 
     get player(){
@@ -279,36 +330,86 @@ for (let i = 0; i < 10; i++){
     charactersList.push(new character('Player ' + i, 'role', 'picture', 'fellows'));
 }
 
+// Configure webhook messages for Discord.
+let msgSecretRoles = ['link',
+{
+    "content": 'content'
+}];
+let msgCupid = ['link',
+{
+    "content":"Escolha dois jogadores para serem flechados. Você pode, se quiser, ser um desses jogadores."
+}];
+let msgSeer = ['link',
+{
+    "content":"Escolha um jogador cuja identidade secreta você deseja descobrir."
+}];
+let msgFox = ['link',
+{
+    "content":"Você quer usar seus poderes para descobrir se há um lobisomem perto de um jogador a sua escolha? Lembre-se: caso deseje utilizar os seus poderes e não houver um lobisomem entre os três jogadores, você perderá a sua habilidade pelo resto do jogo."
+}];
+let msgWitch = ['link',
+{
+    "content":"Você deseja usar alguma de suas habilidades (poção de cura ou poção letal)? Lembre-se: você pode usar as duas na mesma rodada, mas só poderá usar cada poção uma vez durante o jogo."
+}];
+let msgHunter = ['link',
+{
+    "content":"Você será eliminado esta rodada. Escolha um jogador para ser eliminado junto com você."
+}];
+let msgLovers = ['link',
+{
+    "content":"O cupido escolheu flechar vocês dois. Protejam-se! Lembrem-se: se um dos dois morrer, o outro também morrerá na mesma rodada."
+}];
+let msgWerewolves = ['link',
+{
+    "content":"Matilha, conversem e decidam entre vocês quem deve ser devorado esta rodada. Lembrem-se: se houver empate, ninguém será eliminado. Vocês não podem votar em outro lobisomem ou em alguém com quem estejam flechados."
+}];
+let msgWhiteWerewolf = ['link',
+{
+    "content":"Você deseja devorar algum dos lobisomens comuns este turno?"
+}];
+
+// send message specified in the msg*** variables above. 
+
+const sendMessage = function(whurl, msg){
+    fetch(whurl,{
+        "method":"POST",
+        "headers":{
+            "content-type": "application/json"
+        },
+        "body": JSON.stringify(msg)
+    });
+} 
+
 // list of scenes
 // format: condition to play the scene (or otherwise skip it) / image / text / song
 
 let listOfScenes = [
     [function(){return sceneNo == 1}, 'img/revelation.PNG', 'REVELAÇÃO. <br>Os habitantes descobrem os seus papéis secretos.', 
-    mascara],
+    mascara, null],
     [function(){return sceneNo == 1}, 'img/night-cover.PNG', 'A PRIMEIRA NOITE. <br>Uma estranha magia invade Miller\'s Hollow.', 
-    'stop'],
+    'stop', null],
     [function(){return sceneNo != 1}, 'img/night-cover.PNG', 'UMA NOITE NA VILA. <br>Os seres sobrenaturais se preparam para agir.', 
-    blueMoon],
+    blueMoon, null],
     [function(){return(roleNo[CUPID].value>0 && sceneNo == 1)}, 'img/cupid-cover.PNG', 'O CUPIDO escolhe dois jogadores para atirar-lhes' + 
-    'flechas. Esses jogadores terão que se proteger pelo resto do jogo.',
-    estupidoCupido],
+    ' flechas. Esses jogadores terão que se proteger pelo resto do jogo.',
+    estupidoCupido, msgCupid],
     [function(){return(roleNo[SEER].value>0)}, 'img/seer-cover.PNG', 'A VIDENTE, de posse de sua bola de cristal, descobre a identidade de um jogador à sua escolha.',
-    blueMoon],
+    blueMoon, msgSeer],
     [function(){return(roleNo[FOX].value>0)}, 'img/fox-cover.PNG', 'A RAPOSA, se quiser ativar os seus poderes, escolhe um jogador' + 
     ' e descobre se, entre ele e seus dois vizinhos, há pelo menos um lobisomem. <br>' +
     ' Caso não haja nenhum lobisomem, ela perde os seus poderes pelo resto do jogo.',
-    blueMoon],
+    blueMoon, msgFox],
     [function(){return(roleNo[CUPID].value>0 && sceneNo == 1)}, 'img/lovers-cover.PNG', 'OS AMANTES flechados pelo cupido' + 
     ' se reconhecem. <br>Se um dos dois morrer, o outro também morrerá de solidão.',
-    jirafalesFlorinda],
+    jirafalesFlorinda, msgLovers],
     [function(){return(roleNo[WEREWOLF].value>0)}, 'img/werewolf-cover.PNG', 'O encontro da matilha. <br>OS LOBISOMENS se reunem e votam em um jogador para ser devorado.',
-    misteriosDaMeiaNoite],
+    misteriosDaMeiaNoite, msgWerewolves],
     [function(){return(roleNo[WHITE_WEREWOLF].value>0 && sceneNo%2==1)}, 'img/white-werewolf-cover.PNG', 'O LOBISOMEM BRANCO odeia tanto os humanos ' +  
     'quanto os demais lobismonens. <br>Alimenta-se de humanos com o resto da matilha, mas, a cada duas noites, pode devorar outro lobisomem.',
-    misteriosDaMeiaNoite],
+    misteriosDaMeiaNoite, msgWhiteWerewolf],
     [function(){return(roleNo[WITCH].value>0)}, 'img/witch-cover.PNG', 'A BRUXA possui uma poção de cura e outra letal. Cada uma só pode ser usada uma vez,' + 
     ' sendo possível utilizar as duas na mesma noite.',
-    aCucaTePega],
+    aCucaTePega, msgWitch],
     [function(){return true}, 'img/day.PNG', 'UM DIA NA VILA. <br>A vila desperta, todos abrem seus olhos...', 
     ira],
     [function(){return true}, 'img/village.PNG', 'OS HABITANTES DISCUTEM. <br>Quem será condenado à forca hoje?', 
