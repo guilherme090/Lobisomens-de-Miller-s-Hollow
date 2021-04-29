@@ -68,6 +68,12 @@ body{
     display: none;
 }
 
+#lover-1, #lover-1-code, #lover-2, #lover-2-code, #crystal-ball, #crystal-ball-code,
+#werewolf-victim, #werewolf-victim-code, #white-werewolf-victim, #white-werewolf-victim-code,
+#witch-saved, #witch-saved-code, #witch-killed, #witch-killed-code, #hunter-killed, #hunter-killed-code  {
+    display: none;
+}
+
 /* There is an empty space between players 5 and 6, so number 5's margin-right is adjusted */
 
 #name05{
